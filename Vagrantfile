@@ -72,4 +72,13 @@ Vagrant.configure(2) do |config|
     nfs_client_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
     nfs_client_config.vm.provision "shell", path: "scripts/setup-kerberos-client.sh", privileged: true
   end
+
+    # this line relates to the vagrant-hosts plugin, https://github.com/oscar-stack/vagrant-hosts
+  # it adds entry to the /etc/hosts file.
+  # this block is placed outside the define blocks so that it gts applied to all VMs that are defined in this vagrantfile.
+  config.vm.provision :hosts do |provisioner|
+    provisioner.add_host '10.0.9.11', ['kdc.codingbee.net']
+    provisioner.add_host '10.0.9.12', ['kerberos-nfs-storage.local']
+    provisioner.add_host '10.0.9.13', ['kerberos-nfs-client.local']
+  end
 end
