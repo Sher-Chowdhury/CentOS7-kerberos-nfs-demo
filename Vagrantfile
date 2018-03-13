@@ -41,7 +41,7 @@ Vagrant.configure(2) do |config|
     nfs_storage_config.vm.box = "bento/centos-7.4"
     nfs_storage_config.vm.hostname = "kerberos-nfs-storage.local"
     # https://www.vagrantup.com/docs/virtualbox/networking.html
-    nfs_storage_config.vm.network "private_network", ip: "10.0.9.12", :netmask => "255.255.255.0", virtualbox__intnet: "intnet2"
+    nfs_storage_config.vm.network "private_network", ip: "10.0.9.12", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 
     nfs_storage_config.vm.provider "virtualbox" do |vb|
       vb.gui = true
@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "nfs_client" do |nfs_client_config|
     nfs_client_config.vm.box = "bento/centos-7.4"
     nfs_client_config.vm.hostname = "kerberos-nfs-client.local"
-    nfs_client_config.vm.network "private_network", ip: "10.0.9.13", :netmask => "255.255.255.0", virtualbox__intnet: "intnet2"
+    nfs_client_config.vm.network "private_network", ip: "10.0.9.13", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 
     nfs_client_config.vm.provider "virtualbox" do |vb|
       vb.gui = true
