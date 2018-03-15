@@ -19,9 +19,10 @@ EOF
 systemctl enable nfs-client.target
 systemctl restart nfs-client.target
 
-# mount -t nfs4 -o sec=krb5,rw kerberos-nfs-storage.local:/nfs/export_rw /mnt/backups 
+# mount -t nfs -o sec=krb5,rw kerberos-nfs-storage.local:/nfs/export_rw /mnt/backups 
 
-
+echo 'kerberos-nfs-storage.local:/nfs/export_rw   /mnt/backups    nfs    soft,timeo=100,_netdev,rw,sec=krb5   0   0' >> /etc/fstab
+mount -a
 
 
 
