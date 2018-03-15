@@ -71,6 +71,7 @@ Vagrant.configure(2) do |config|
 
     nfs_client_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
     nfs_client_config.vm.provision "shell", path: "scripts/setup-kerberos-client.sh", privileged: true
+    nfs_client_config.vm.provision "shell", path: "scripts/nfs_client_setup.sh", privileged: true
   end
 
     # this line relates to the vagrant-hosts plugin, https://github.com/oscar-stack/vagrant-hosts

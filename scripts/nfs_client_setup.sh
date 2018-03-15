@@ -8,7 +8,12 @@ echo '##########################################################################
 
 
 mkdir -p /mnt/backups
-mkdir -p /mnt/ref_data
+
+
+# showmount -e kerberos-nfs-storage.local
+# mount -t nfs kerberos-nfs-storage.local:/nfs/export_rw /mnt/backups
+
+# echo 'kerberos-nfs-storage.local:/nfs/export_rw   /mnt/backups    nfs    soft,timeo=100,_netdev,rw   0   0' >> /etc/fstab
 
 
 
