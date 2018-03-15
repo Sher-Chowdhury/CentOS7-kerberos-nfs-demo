@@ -54,6 +54,7 @@ Vagrant.configure(2) do |config|
     nfs_storage_config.vm.provision "shell", path: "scripts/install-rpms.sh", privileged: true
     nfs_storage_config.vm.provision "shell", path: "scripts/setup-kerberos-client.sh", privileged: true
     nfs_storage_config.vm.provision "shell", path: "scripts/nfs_server_setup.sh", privileged: true
+    nfs_storage_config.vm.provision "shell", path: "scripts/nfs_server_kerberos_integration.sh", privileged: true
   end
 
 

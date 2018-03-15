@@ -33,7 +33,8 @@ yum install -y nfs-utils
 # here are the 2 folders to be shared
 #mkdir -p /nfs/export_ro
 mkdir -p /nfs/export_rw
-
+chown nfsnobody:nobody /nfs/export_rw
+chmod 755 /nfs/export_rw
 
 #semanage fcontext -a -t public_content_rw_t  "/nfs/export_ro(/.*)?"
 #restorecon -R /nfs/export_ro
