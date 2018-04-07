@@ -13,3 +13,12 @@ yum install -y bash-completion || exit 1
 yum install -y man-pages
 yum install -y bash-completion-extras || exit 1
 yum install -y mtr || exit 1
+
+
+
+# Do a few more stuff. 
+sed -i 's/SELINUX=permissive/SELINUX=enforcing/g' /etc/selinux/config
+setenforce enforcing
+
+systemctl enable firewalld
+systemctl start firewalld

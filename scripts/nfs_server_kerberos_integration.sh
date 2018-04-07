@@ -23,12 +23,4 @@ sed -i 's/)/,sec=krb5)/g' /etc/exports
 systemctl restart nfs-server
 # note, restarting the daemon isn't enough, for some reason have to reboot the whole machine. 
 
-
-
-
-
-
-
-
-
-
+exit 0
