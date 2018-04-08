@@ -11,12 +11,12 @@ yum install -y nfs-utils
 mkdir -p /mnt/backups
 
 
-# showmount -e kerberos-nfs-storage.local
-# mount -t nfs kerberos-nfs-storage.local:/nfs/export_rw /mnt/backups
+# showmount -e nfs-storage.cb.net
+# mount -t nfs nfs-storage.cb.net:/nfs/export_rw /mnt/backups
 
 # non-kerberos-authentication entry:
-#echo 'kerberos-nfs-storage.local:/nfs/export_rw   /mnt/backups    nfs    soft,timeo=100,_netdev,rw   0   0' >> /etc/fstab
-#mount -a
+echo 'nfs-storage.cb.net:/nfs/export_rw   /mnt/backups    nfs    soft,timeo=100,_netdev,rw,sec=krb5   0   0' >> /etc/fstab
+mount -a
 
 
 

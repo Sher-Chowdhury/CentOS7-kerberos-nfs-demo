@@ -36,9 +36,6 @@ mkdir -p /nfs/export_rw
 chown nfsnobody:nobody /nfs/export_rw
 chmod 755 /nfs/export_rw
 
-#semanage fcontext -a -t public_content_rw_t  "/nfs/export_ro(/.*)?"
-#restorecon -R /nfs/export_ro
-
 semanage fcontext -a -t public_content_rw_t  "/nfs/export_rw(/.*)?"
 restorecon -R /nfs/export_rw
 
@@ -47,22 +44,13 @@ restorecon -R /nfs/export_rw
 #echo '/nfs/export_ro  *(sync)' > /etc/exports
 echo '/nfs/export_rw  *(rw,no_root_squash)' >> /etc/exports
 
-# here we start the export process, we are exporting (a)ll (v)erbosely 
-# exportfs -avr
-
-
-
-
 systemctl start nfs-server
 systemctl enable nfs-server
-
 
 # You can confirm this has worked by running:
 # showmount -e localhost
 # and also:
 # cat /var/lib/nfs/etab
-
-
 
 
 exit 0
