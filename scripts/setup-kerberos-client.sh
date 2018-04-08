@@ -33,29 +33,3 @@ quit
 EOF
 
 exit 0
-cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
-
-sed -i 's/#   GSSAPIAuthentication no/    GSSAPIAuthentication yes/g' /etc/ssh/ssh_config
-sed -i 's/#   GSSAPIDelegateCredentials no/    GSSAPIDelegateCredentials yes/g' /etc/ssh/ssh_config
-
-sed -i 's/GSSAPIAuthentication no/GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
-systemctl restart sshd
-
-authconfig --enablekrb5  --update
-
-useradd krbtest
-
-
-# su - krbtest
-# the following should fail, becuase it gives a password prompt:
-# $ e
-# the following should give a 'not found' error message:
-# $ klist
-# kinit    will get a password prompt, enter: TestAccountPassword 
-# klist  # this is to check you have an active token
-# then do:
-# $ ssh kdc.cb.net
-# you should be able to log in without a password prompt, or the need to first setup private+public ssh keys. 
-
-
-exit 0
