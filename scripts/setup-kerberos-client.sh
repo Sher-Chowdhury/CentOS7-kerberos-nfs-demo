@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# exit 0
 set -ex
 
 echo '##########################################################################'
@@ -29,14 +29,9 @@ kadmin <<EOF
 rootpassword
 addprinc -randkey host/$clienthostname
 ktadd host/$clienthostname
-addprinc -randkey nfs/$clienthostname
-ktadd nfs/$clienthostname
 quit
 EOF
 
-
-systemctl enable nfs-client.target
-systemctl restart nfs-client.target
 
 cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
 

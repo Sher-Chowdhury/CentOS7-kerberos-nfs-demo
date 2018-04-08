@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# exit 0
 set -ex
 
 echo '##########################################################################'
@@ -60,6 +60,9 @@ kadmin.local <<EOF
 addprinc root/admin
 rootpassword
 rootpassword
+addprinc krbtest
+testpassword
+testpassword
 addprinc -randkey host/kdc.cb.net
 ktadd host/kdc.cb.net
 quit
@@ -68,30 +71,35 @@ EOF
 
 # the above ktadd command ends up creating the following file:
 
-#cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
+file /etc/krb5.keytab
 
-#sed -i 's/#   GSSAPIAuthentication no/    GSSAPIAuthentication yes/g' /etc/ssh/ssh_config
+cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
 
-
-#sed -i 's/#   GSSAPIDelegateCredentials no/    GSSAPIDelegateCredentials yes/g' /etc/ssh/ssh_config
-
-#sed -i 's/GSSAPIAuthentication no/GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
-#systemctl restart sshd
-
-#authconfig --enablekrb5  --update
+sed -i 's/#   GSSAPIAuthentication no/    GSSAPIAuthentication yes/g' /etc/ssh/ssh_config
 
 
+sed -i 's/#   GSSAPIDelegateCredentials no/    GSSAPIDelegateCredentials yes/g' /etc/ssh/ssh_config
 
-firewall-cmd --add-service=kadmin --permanent
+sed -i 's/GSSAPIAuthentication no/GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
+systemctl restart sshd
+
+authconfig --enablekrb5  --update
+
+
+
+systemctl start firewalld.service
 firewall-cmd --add-service=kerberos --permanent
+firewall-cmd --add-service=kadmin --permanent
+systemctl restart firewalld.service
+systemctl enable firewalld.service
 
-systemctl restart firewalld
+firewall-cmd --list-all
 
 
 
 # next we do some testing:
 
-# useradd krbtest
+useradd krbtest
 
 
 # su - krbtest
@@ -103,6 +111,6 @@ systemctl restart firewalld
 # klist  # this is to check you have an active token
 # then do:
 # $ ssh kdc.cb.net
-# you should be able to log in without a password prompt, or the need to first setup private+public ssh keys. 
+# you should be able to log in without a password prompt, or the need to first setup private+public ssh keys.
 
-echo 0
+exit 0

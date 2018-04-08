@@ -31,15 +31,27 @@ yum install -y nfs-utils
 #mkdir -p /nfs/export_ro
 mkdir -p /nfs/export_rw
 chown nfsnobody:nobody /nfs/export_rw
-chmod 755 /nfs/export_rw
+chmod 775 /nfs/export_rw
 
 semanage fcontext -a -t public_content_rw_t  "/nfs/export_rw(/.*)?"
-restorecon -R /nfs/export_rw
+restorecon -Rv /nfs/export_rw
+
+
+clienthostname=$(hostname -f)
+kadmin <<EOF
+rootpassword
+addprinc -randkey nfs/$clienthostname
+ktadd nfs/$clienthostname
+quit
+EOF
+
+
+
 
 # Next we need to add entries to /etc/exports, which is an empty file by default:
 # do 'man exports' to see exmaple confis 
 #echo '/nfs/export_ro  *(sync)' > /etc/exports
-echo '/nfs/export_rw  *(rw,no_root_squash)' >> /etc/exports
+echo '/nfs/export_rw  *(rw,no_root_squash,sec=krb5)' >> /etc/exports
 
 systemctl start nfs-server
 systemctl enable nfs-server
