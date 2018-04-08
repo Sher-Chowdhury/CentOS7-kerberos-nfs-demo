@@ -25,3 +25,4 @@ mount -a
 
 
 
+exit 0

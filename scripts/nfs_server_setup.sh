@@ -7,9 +7,6 @@ echo '##### About to run nfs_server_setup.sh script ##################'
 echo '##########################################################################'
 
 
-sed -i 's/SELINUX=permissive/SELINUX=enforcing/g' /etc/selinux/config
-setenforce enforcing
-
 setsebool -P nfs_export_all_rw 1
 setsebool -P nfs_export_all_ro 1
 # Here we made (P)ersistant changes, you can check with 

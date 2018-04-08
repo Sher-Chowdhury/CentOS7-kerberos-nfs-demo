@@ -26,7 +26,7 @@ sed -i 's/# example.com = EXAMPLE.COM/ cb.net = CB.NET/g' /etc/krb5.conf
 
 clienthostname=$(hostname -f)
 kadmin <<EOF
-MySecretRootPassword
+rootpassword
 addprinc -randkey host/$clienthostname
 ktadd host/$clienthostname
 addprinc -randkey nfs/$clienthostname
@@ -61,3 +61,6 @@ useradd krbtest
 # then do:
 # $ ssh kdc.cb.net
 # you should be able to log in without a password prompt, or the need to first setup private+public ssh keys. 
+
+
+exit 0

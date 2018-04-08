@@ -8,7 +8,7 @@ echo '##########################################################################
 
 clienthostname=$(hostname -f)
 kadmin <<EOF
-MySecretRootPassword
+rootpassword
 addprinc -randkey nfs/$clienthostname
 ktadd nfs/$clienthostname
 quit
