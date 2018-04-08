@@ -32,7 +32,7 @@ ktadd host/$clienthostname
 quit
 EOF
 
-
+exit 0
 cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
 
 sed -i 's/#   GSSAPIAuthentication no/    GSSAPIAuthentication yes/g' /etc/ssh/ssh_config

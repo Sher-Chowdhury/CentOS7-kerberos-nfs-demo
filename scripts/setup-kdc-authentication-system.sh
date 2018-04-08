@@ -12,7 +12,13 @@ yum install -y krb5-server krb5-workstation pam_krb5
 
 cp /var/kerberos/krb5kdc/kdc.conf /var/kerberos/krb5kdc/kdc.conf-orig
 
+systemctl start firewalld.service
+firewall-cmd --add-service=kerberos --permanent
+firewall-cmd --add-service=kadmin --permanent
+systemctl restart firewalld.service
+systemctl enable firewalld.service
 
+firewall-cmd --list-all
 
 
 sed -i s/EXAMPLE.COM/CB.NET/g /var/kerberos/krb5kdc/kdc.conf
@@ -73,6 +79,9 @@ EOF
 
 file /etc/krb5.keytab
 
+exit 0
+
+
 cp /etc/ssh/ssh_config /etc/ssh/ssh_config-orig
 
 sed -i 's/#   GSSAPIAuthentication no/    GSSAPIAuthentication yes/g' /etc/ssh/ssh_config
@@ -84,16 +93,6 @@ sed -i 's/GSSAPIAuthentication no/GSSAPIAuthentication yes/g' /etc/ssh/sshd_conf
 systemctl restart sshd
 
 authconfig --enablekrb5  --update
-
-
-
-systemctl start firewalld.service
-firewall-cmd --add-service=kerberos --permanent
-firewall-cmd --add-service=kadmin --permanent
-systemctl restart firewalld.service
-systemctl enable firewalld.service
-
-firewall-cmd --list-all
 
 
 
