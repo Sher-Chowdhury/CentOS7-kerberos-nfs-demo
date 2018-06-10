@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# exit 0
+exit 0
 set -ex
 
 echo '##########################################################################'
@@ -24,6 +24,9 @@ sed -i 's/# }/}/g' /etc/krb5.conf     # this should edit the line that's right a
 sed -i 's/# .example.com = EXAMPLE.COM/ .cb.net = CB.NET/g' /etc/krb5.conf
 sed -i 's/# example.com = EXAMPLE.COM/ cb.net = CB.NET/g' /etc/krb5.conf
 
+
+
+
 clienthostname=$(hostname -f)
 kadmin <<EOF
 rootpassword
@@ -31,5 +34,9 @@ addprinc -randkey host/$clienthostname
 ktadd host/$clienthostname
 quit
 EOF
+# alternatively could have done:
+# kadmin -p root/admin -w rootpassword
+
+
 
 exit 0

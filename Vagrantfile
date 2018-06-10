@@ -20,7 +20,7 @@ end
 Vagrant.configure(2) do |config|
 
   config.vm.define "kerberos_server" do |kerberos_server_config|
-    kerberos_server_config.vm.box = "bento/centos-7.4"
+    kerberos_server_config.vm.box = "bento/centos-7.5"
     kerberos_server_config.vm.hostname = "kdc.cb.net"
     # https://www.vagrantup.com/docs/virtualbox/networking.html
     kerberos_server_config.vm.network "private_network", ip: "10.0.9.11", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "nfs_storage" do |nfs_storage_config|
-    nfs_storage_config.vm.box = "bento/centos-7.4"
+    nfs_storage_config.vm.box = "bento/centos-7.5"
     nfs_storage_config.vm.hostname = "nfs-storage.cb.net"
     # https://www.vagrantup.com/docs/virtualbox/networking.html
     nfs_storage_config.vm.network "private_network", ip: "10.0.9.12", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
@@ -59,7 +59,7 @@ Vagrant.configure(2) do |config|
 
 
   config.vm.define "nfs_client" do |nfs_client_config|
-    nfs_client_config.vm.box = "bento/centos-7.4"
+    nfs_client_config.vm.box = "bento/centos-7.5"
     nfs_client_config.vm.hostname = "nfs-client.cb.net"
     nfs_client_config.vm.network "private_network", ip: "10.0.9.13", :netmask => "255.255.255.0", virtualbox__intnet: "intnet1"
 

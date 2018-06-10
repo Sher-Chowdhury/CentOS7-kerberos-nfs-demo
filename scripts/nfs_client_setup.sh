@@ -17,7 +17,7 @@ systemctl restart nfs-client.target
 # showmount -e nfs-storage.cb.net
 # mount -t nfs nfs-storage.cb.net:/nfs/export_rw /mnt/backups
 
-# non-kerberos-authentication entry:
+# kerberos-authentication entry:
 echo 'nfs-storage.cb.net:/nfs/export_rw   /mnt/backups    nfs    soft,timeo=100,_netdev,rw,sec=krb5   0   0' >> /etc/fstab
 mount -a
 
