@@ -26,7 +26,7 @@ sed -i s/EXAMPLE.COM/CB.NET/g /var/kerberos/krb5kdc/kdc.conf
 
 # make it only kerberos5 compatible and not backward compatible. 
 sed -i s/#master_key_type/master_key_type/g /var/kerberos/krb5kdc/kdc.conf
-sed -i '/master_key_type/a \ \ default_principle_flags = +preauth' /var/kerberos/krb5kdc/kdc.conf # this inserts a line after a match
+sed -i '/master_key_type/a \ \ default_principal_flags = +preauth' /var/kerberos/krb5kdc/kdc.conf # this inserts a line after a match
                                                                                                   # https://stackoverflow.com/questions/15559359/insert-line-after-first-match-using-sed
 
 
