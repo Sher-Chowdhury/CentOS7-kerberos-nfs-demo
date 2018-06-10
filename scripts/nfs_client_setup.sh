@@ -24,6 +24,9 @@ EOF
 ### not sure why this happens. but you can override this by running the following instead. 
 # [root@nfs-client rw]# kadmin -p root/admin
 
+# another options is to run:
+# $ kdestroy
+
 systemctl enable nfs-client.target
 systemctl stop nfs-client.target
 systemctl start nfs-client.target
