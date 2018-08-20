@@ -2,18 +2,29 @@
 # vi: set ft=ruby :
 
 
-# http://stackoverflow.com/questions/19492738/demand-a-vagrant-plugin-within-the-vagrantfile
+# https://github.com/hashicorp/vagrant/issues/1874#issuecomment-165904024
 # not using 'vagrant-vbguest' vagrant plugin because now using bento images which has vbguestadditions preinstalled.
-required_plugins = %w( vagrant-hosts vagrant-share vagrant-vbox-snapshot vagrant-host-shell vagrant-triggers vagrant-reload )
-plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
-if not plugins_to_install.empty?
-  puts "Installing plugins: #{plugins_to_install.join(' ')}"
-  if system "vagrant plugin install #{plugins_to_install.join(' ')}"
-    exec "vagrant #{ARGV.join(' ')}"
-  else
-    abort "Installation of one or more plugins has failed. Aborting."
+def ensure_plugins(plugins)
+  logger = Vagrant::UI::Colored.new
+  result = false
+  plugins.each do |p|
+    pm = Vagrant::Plugin::Manager.new(
+      Vagrant::Plugin::Manager.user_plugins_file
+    )
+    plugin_hash = pm.installed_plugins
+    next if plugin_hash.has_key?(p)
+    result = true
+    logger.warn("Installing plugin #{p}")
+    pm.install_plugin(p)
+  end
+  if result
+    logger.warn('Re-run vagrant up now that plugins are installed')
+    exit
   end
 end
+
+required_plugins = ['vagrant-hosts', 'vagrant-share', 'vagrant-vbox-snapshot', 'vagrant-host-shell', 'vagrant-reload']
+ensure_plugins required_plugins
 
 
 
